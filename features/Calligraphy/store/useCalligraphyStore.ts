@@ -24,7 +24,17 @@ export interface IWordData {
   meaning: string;
 }
 
+// NEW: Track stroke results for progress graph
+export interface IStrokeResult {
+  index: number;
+  isCorrect: boolean;
+  timestamp: number;
+}
+
 interface ICalligraphyState {
+  completedHiragana: string[];
+  completedKatakana: string[];
+
   // Kana type
   selectedKanaType: KanaType;
   setSelectedKanaType: (type: KanaType) => void;
@@ -58,6 +68,11 @@ interface ICalligraphyState {
   incrementCorrect: () => void;
   incrementMissed: () => void;
   resetStats: () => void;
+
+  // NEW: Stroke results for progress graph
+  strokeResults: IStrokeResult[];
+  addStrokeResult: (isCorrect: boolean) => void;
+  clearStrokeResults: () => void;
 
   // Completed characters
   completedCharacters: string[];
@@ -101,7 +116,8 @@ const useCalligraphyStore = create<ICalligraphyState>(set => ({
     set({
       selectedCharacter: character,
       currentStrokeIndex: 0,
-      currentStage: 'stroke'
+      currentStage: 'stroke',
+      strokeResults: []
     }),
 
   // Brush
@@ -132,6 +148,17 @@ const useCalligraphyStore = create<ICalligraphyState>(set => ({
   incrementMissed: () =>
     set(state => ({ missedStrokes: state.missedStrokes + 1 })),
   resetStats: () => set({ correctStrokes: 0, missedStrokes: 0 }),
+
+  // NEW: Stroke results for progress graph
+  strokeResults: [],
+  addStrokeResult: (isCorrect: boolean) =>
+    set(state => ({
+      strokeResults: [
+        ...state.strokeResults,
+        { index: state.strokeResults.length, isCorrect, timestamp: Date.now() }
+      ]
+    })),
+  clearStrokeResults: () => set({ strokeResults: [] }),
 
   // Completed
   completedCharacters: [],
