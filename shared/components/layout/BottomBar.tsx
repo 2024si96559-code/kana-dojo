@@ -17,6 +17,7 @@ import PatchNotesModal from '@/features/PatchNotes/components/PatchNotesModal';
 
 import { APP_VERSION_DISPLAY } from '@/shared/lib/constants';
 import ThemesModal from '@/features/Preferences/components/ThemesModal';
+import FontsModal from '@/features/Preferences/components/FontsModal';
 
 type SocialLink = {
   icon: IconDefinition | LucideIcon;
@@ -61,6 +62,7 @@ const MobileBottomBar = () => {
   const effectiveTheme = isCrazyMode && activeThemeId ? activeThemeId : theme;
   const [isPatchNotesOpen, setIsPatchNotesOpen] = useState(false);
   const [isThemeOpen, setIsThemeOpen] = useState(false);
+  const [isFontOpen, setIsFontOpen] = useState(false);
 
   const handleClick = (url: string) => {
     playClick();
@@ -77,6 +79,11 @@ const MobileBottomBar = () => {
     setIsThemeOpen(true);
   };
 
+  const handleFontClick = () => {
+    playClick();
+    setIsFontOpen(true);
+  };
+
   const baseIconClasses = clsx(
     'hover:cursor-pointer ',
     'active:scale-100 active:duration-225',
@@ -89,7 +96,7 @@ const MobileBottomBar = () => {
       text: effectiveTheme.replace('-', ' '),
       onClick: handleThemeClick
     },
-    { icon: Type, text: font.toLowerCase() },
+    { icon: Type, text: font.toLowerCase(), onClick: handleFontClick },
     {
       icon: GitBranch,
       text: `v${APP_VERSION_DISPLAY}`,
@@ -166,11 +173,7 @@ const MobileBottomBar = () => {
         {infoItems.map((item, idx) => {
           const content = (
             <span
-              className={clsx(
-                'flex gap-1',
-                item.onClick &&
-                  'hover:cursor-pointer hover:text-[var(--main-color)]'
-              )}
+              className='flex gap-1 hover:cursor-pointer hover:text-(--main-color)'
               onClick={item.onClick}
             >
               <item.icon size={16} />
@@ -195,6 +198,7 @@ const MobileBottomBar = () => {
         onOpenChange={setIsPatchNotesOpen}
       />
       <ThemesModal open={isThemeOpen} onOpenChange={setIsThemeOpen} />
+      <FontsModal open={isFontOpen} onOpenChange={setIsFontOpen} />
     </div>
   );
 };
