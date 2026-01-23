@@ -249,7 +249,7 @@ const baseThemeSets: BaseThemeGroup[] = [
         mainColor: 'oklch(72.0% 0.105 230.0 / 1)',
         secondaryColor: 'oklch(78.0% 0.025 260.0 / 1)',
       },
-      
+
       {
         id: 'vending-glow',
         backgroundColor: 'oklch(16.0% 0.025 280.0 / 1)',
@@ -281,6 +281,10 @@ const baseThemeSets: BaseThemeGroup[] = [
     icon: Moon,
     themes: [
       {
+        id: 'sake-glass',
+        backgroundColor: 'oklch(98.0% 0.004 90.0 / 1)',
+        mainColor: 'oklch(55.0% 0.035 250.0 / 1)',
+        secondaryColor: 'oklch(70.0% 0.015 90.0 / 1)'},{
         id: 'winter-kimono',
         backgroundColor: 'oklch(16.0% 0.040 260.0 / 1)',
         mainColor: 'oklch(88.0% 0.020 240.0 / 1)',
